@@ -6,7 +6,6 @@ class Post {
   //  final bool sticky;
   //  guid = url/?id
   //  String excerpt; <- same as content?
-  //  int featured_media; <- what is this?
   // meta
   // categories
   // tags
@@ -26,6 +25,8 @@ class Post {
   final int author; // int. need to load user data to display
   final String comment_status; // "open"
   final String format;
+  final int featured_media; // featured image id
+  String featured_image; // TODO: load it from featured media object I create later
 
   Post(
       this.id,
@@ -41,7 +42,8 @@ class Post {
       this.content,
       this.author,
       this.comment_status,
-      this.format);
+      this.format,
+      this.featured_media);
 
   Post.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -57,7 +59,8 @@ class Post {
         content = json['content']['rendered'],
         author = json['author'],
         comment_status = json['comment_status'],
-        format = json['format'];
+        format = json['format'],
+        featured_media = json['featured_media'];
 
   Map<String, String> _titleMap() => {'rendered': title};
 
@@ -77,10 +80,13 @@ class Post {
         'content': _contentMap(),
         'author': author,
         'comment_status': comment_status,
-        'format': format
+        'format': format,
+        'featured_media': featured_media
       };
 
   Html asHTML() {
-    return Html(data: content,);
+    return Html(
+      data: content,
+    );
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_to_app/all_posts_list_page.dart';
 import 'package:flutter_blog_to_app/api.dart';
 import 'package:flutter_blog_to_app/post.dart';
-
-
 
 class AllPostsPage extends StatefulWidget {
   AllPostsPage({Key key, this.title}) : super(key: key);
@@ -24,32 +23,13 @@ class _AllPostsPageState extends State<AllPostsPage> {
             future: blogApi.fetchPost(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return _AllPostsWithData(snapshot.data);
+                return AllPostsListPage(snapshot.data);
               } else if (snapshot.hasError) {
                 return _AllPostsWithoutData();
               }
               return _AllPostsLoading();
             }) // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class _AllPostsWithData extends StatelessWidget {
-  const _AllPostsWithData(this.data, {
-    Key key,
-  }) : super(key: key);
-
-  final List<Post> data;
-
-  @override
-  Widget build(BuildContext context) {
-    var posts = data;
-
-    return ListView.builder(
-        itemCount: posts.length,
-        itemBuilder: (context, index) {
-          return Text(posts[index].title);
-        });
+        );
   }
 }
 
